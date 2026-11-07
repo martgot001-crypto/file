@@ -25,7 +25,7 @@
  .save{@apply px-5 py-2 text-sm font-semibold text-white rounded-xl shadow-md transition-all}
  .kpi{@apply bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm}
  .hbtn{@apply flex items-center justify-center space-x-1 text-xs font-medium px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-colors whitespace-nowrap shrink-0}
- .act{@apply flex-1 sm:flex-initial inline-flex items-center justify-center space-x-1.5 text-white text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl transition-all shadow-md active:scale-95}
+ .act{@apply flex-1 sm:flex-initial inline-flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap text-white text-xs sm:text-sm font-medium px-2 sm:px-3.5 py-2 rounded-xl transition-all shadow-md active:scale-95}
 }
 :root{box-sizing:border-box;color-scheme:light;padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -61,7 +61,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
    <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden"><div id="kBar" class="bg-teal-500 h-full rounded-full transition-all duration-500" style="width:0%"></div></div></div>
   <div class="kpi"><div class="flex justify-between items-start mb-2"><span class="text-xs font-medium text-slate-500">選択日のウォーキング</span><div class="p-2 rounded-lg bg-sky-50 text-sky-600"><i data-lucide="footprints" class="w-4 h-4"></i></div></div>
    <div class="flex items-baseline space-x-1"><span id="kWalk" class="text-2xl font-bold">0.0</span><span class="text-xs font-semibold text-slate-500">km</span></div><p id="kSteps" class="text-xs mt-2 font-medium text-slate-400">未記録</p></div>
-  <div class="kpi"><div class="flex justify-between items-start mb-2"><span class="text-xs font-medium text-slate-500">本日摂取カロリー</span><div class="p-2 rounded-lg bg-amber-50 text-amber-600"><i data-lucide="utensils" class="w-4 h-4"></i></div></div>
+  <div class="kpi"><div class="flex justify-between items-start mb-2"><span class="text-xs font-medium text-slate-500">本日摂取カロリー</span><div class="p-2 rounded-lg bg-orange-50 text-orange-600"><i data-lucide="utensils" class="w-4 h-4"></i></div></div>
    <div class="flex items-baseline space-x-1"><span id="kCal" class="text-2xl font-bold">0</span><span class="text-xs font-semibold text-slate-500">kcal</span></div><p id="kCalGoal" class="text-xs mt-2 font-medium text-slate-400"></p></div>
   <div class="kpi col-span-2 sm:col-span-1"><div class="flex justify-between items-start mb-2"><span class="text-xs font-medium text-slate-500">体脂肪率</span><div class="p-2 rounded-lg bg-indigo-50 text-indigo-600"><i data-lucide="percent" class="w-4 h-4"></i></div></div>
    <div class="flex items-baseline space-x-1"><span id="kFat" class="text-2xl font-bold">--</span><span class="text-xs font-semibold text-slate-500">%</span></div><p id="kFatD" class="text-xs mt-2 font-medium text-slate-400">前日比: --</p></div>
@@ -70,10 +70,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
  <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
   <div class="flex items-center space-x-2"><label for="curDate" class="text-xs font-bold text-slate-500">表示日付:</label>
    <input type="date" id="curDate" class="bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium"></div>
-  <div class="flex flex-wrap items-center gap-2">
-   <button data-open="weightModal" class="act bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20"><i data-lucide="plus-circle" class="w-4 h-4"></i><span>体重を記録</span></button>
+  <div class="grid grid-cols-3 sm:flex sm:flex-wrap items-stretch sm:items-center gap-2">
+   <button data-open="weightModal" class="act bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20"><i data-lucide="plus-circle" class="w-4 h-4"></i><span>体重</span></button>
    <button data-open="walkModal" class="act bg-sky-600 hover:bg-sky-700 shadow-sky-600/20"><i data-lucide="footprints" class="w-4 h-4"></i><span>ウォーキング</span></button>
-   <button data-open="mealModal" class="act bg-teal-600 hover:bg-teal-700 shadow-teal-600/20"><i data-lucide="utensils" class="w-4 h-4"></i><span>食事を記録</span></button>
+   <button data-open="mealModal" class="act bg-orange-500 hover:bg-orange-600 shadow-orange-500/20"><i data-lucide="utensils" class="w-4 h-4"></i><span>食事</span></button>
   </div>
  </div>
 
@@ -94,6 +94,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
    <button id="chNext" type="button" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 disabled:opacity-40" aria-label="最新へ"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
   </div>
   <p id="chLabel" class="text-xs text-slate-500 text-center">グラフを左右にスワイプ、またはスライダーで期間を移動できます</p>
+  <details id="scaleBox" class="rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-xs text-slate-600">
+   <summary class="cursor-pointer font-semibold select-none">縦軸のスケール設定</summary>
+   <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div><p class="font-semibold mb-1 text-emerald-700">体重 (kg)</p><div class="flex items-center gap-1"><input id="scWmin" type="number" step="0.5" placeholder="最小" class="inp !py-1.5 !px-2 text-xs" aria-label="体重の最小値"><span>〜</span><input id="scWmax" type="number" step="0.5" placeholder="最大" class="inp !py-1.5 !px-2 text-xs" aria-label="体重の最大値"></div></div>
+    <div><p class="font-semibold mb-1 text-indigo-600">体脂肪率 (%)</p><div class="flex items-center gap-1"><input id="scFmin" type="number" step="0.5" placeholder="最小" class="inp !py-1.5 !px-2 text-xs" aria-label="体脂肪率の最小値"><span>〜</span><input id="scFmax" type="number" step="0.5" placeholder="最大" class="inp !py-1.5 !px-2 text-xs" aria-label="体脂肪率の最大値"></div></div>
+    <div><p class="font-semibold mb-1 text-sky-600">ウォーキング (km)</p><div class="flex items-center gap-1"><span class="shrink-0">最大</span><input id="scKmax" type="number" step="1" min="1" placeholder="自動" class="inp !py-1.5 !px-2 text-xs" aria-label="ウォーキングの最大値"></div></div>
+   </div>
+   <div class="mt-3 flex flex-wrap gap-2">
+    <button type="button" id="scIn" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 font-medium">体重を拡大(細かく)</button>
+    <button type="button" id="scOut" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 font-medium">体重を縮小(広く)</button>
+    <button type="button" id="scReset" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 font-medium text-rose-600">すべて自動に戻す</button>
+   </div>
+   <p class="mt-2 text-slate-400">空欄は自動です。数値を入れると、その範囲に固定されます(体脂肪率の軸は画面には表示されません)。</p>
+  </details>
  </section>
 
  <section class="space-y-4">
@@ -103,16 +117,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
  <section class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm space-y-4">
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 border-b border-slate-100">
-   <div><h2 class="text-lg font-bold">最近の記録データ</h2><p class="text-xs text-slate-500">日々の詳細記録と月間集計パフォーマンス</p></div>
+   <div><h2 class="text-lg font-bold">記録データ(月別)</h2><p class="text-xs text-slate-500">月ごとに表示します。✎ボタンで過去の記録も編集できます</p></div>
    <div class="flex items-center space-x-3 bg-sky-50/70 border border-sky-100 px-3 py-2 rounded-xl text-xs text-sky-800">
     <i data-lucide="map-pin" class="w-4 h-4 text-sky-600 shrink-0"></i>
     <div class="flex space-x-3 font-medium"><span>当月累計: <strong id="mTotal" class="text-sky-900">0.0</strong> km</span><span class="text-sky-300">|</span><span>月平均: <strong id="mAvg" class="text-sky-900">0.0</strong> km/日</span></div>
    </div>
   </div>
-  <div class="overflow-x-auto">
-   <table class="w-full text-left text-sm text-slate-600 min-w-[800px]">
-    <thead class="bg-slate-50 text-slate-500 font-medium text-xs"><tr>
-     <th class="py-3 px-3 rounded-l-xl">日付</th><th class="py-3 px-3">体重 (kg)</th><th class="py-3 px-3 text-emerald-700">直近5日平均</th><th class="py-3 px-3">体脂肪率 (%)</th><th class="py-3 px-3">距離 (km)</th><th class="py-3 px-3">朝食</th><th class="py-3 px-3">昼食</th><th class="py-3 px-3">夕食 / 夜食</th><th class="py-3 px-3 text-right rounded-r-xl">操作</th></tr></thead>
+  <div id="tableWrap" class="overflow-auto max-h-[30rem] rounded-xl border border-slate-100">
+   <table class="w-full text-left text-sm text-slate-600 min-w-[900px]">
+    <thead class="bg-slate-50 text-slate-500 font-medium text-xs sticky top-0 z-10"><tr>
+     <th class="py-3 px-3 rounded-l-xl">日付</th><th class="py-3 px-3">体重 (kg)</th><th class="py-3 px-3 text-emerald-700">直近5日平均</th><th class="py-3 px-3">体脂肪率 (%)</th><th class="py-3 px-3">距離 (km)</th><th class="py-3 px-3">朝食</th><th class="py-3 px-3">昼食</th><th class="py-3 px-3">夕食 / 夜食</th><th class="py-3 px-3 text-orange-600 whitespace-nowrap">摂取合計</th><th class="py-3 px-3 text-right rounded-r-xl">操作</th></tr></thead>
     <tbody id="tbody" class="divide-y divide-slate-100"></tbody>
    </table>
   </div>
@@ -146,9 +160,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
    <div><label class="lbl">日付</label><input type="date" id="mDate" required class="inp"></div>
    <div><label class="lbl">区分</label><select id="mType" class="inp"><option>朝食</option><option>昼食</option><option>夕食</option><option>間食</option></select></div></div>
   <div><label class="lbl">メニュー・食べたもの</label><input type="text" id="mName" placeholder="例: 鶏胸肉のサラダ、ごはん" required class="inp"></div>
-  <div><label class="lbl">概算カロリー (kcal)</label><input type="number" id="mCal" placeholder="500" class="inp"></div>
+  <div><div class="flex items-center justify-between"><label class="lbl" for="mCal">概算カロリー (kcal)</label><button type="button" id="mAuto" class="text-xs font-semibold text-orange-600 hover:underline mb-1">名前から自動計算</button></div><input type="number" id="mCal" placeholder="空欄のまま保存すると自動計算" class="inp"><p id="mHint" class="text-xs text-slate-500 mt-1" aria-live="polite"></p></div>
   <div><label class="lbl">メモ</label><textarea id="mNotes" rows="2" placeholder="タンパク質多め、夜遅く食べたなど" class="inp resize-none"></textarea></div>
-  <div class="pt-2 flex justify-end space-x-3"><button type="button" class="cancel">キャンセル</button><button type="submit" class="save bg-teal-600 hover:bg-teal-700 shadow-teal-600/20">保存する</button></div>
+  <div class="pt-2 flex justify-end space-x-3"><button type="button" class="cancel">キャンセル</button><button type="submit" class="save bg-orange-500 hover:bg-orange-600 shadow-orange-500/20">保存する</button></div>
  </form></div></div>
 
 <div id="goalModal" class="modal" style="display:none"><div class="box">
@@ -163,6 +177,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div><label class="lbl">目標体重 (kg)</label><input type="number" step="0.1" id="gW" required class="inp"></div>
   <div><label class="lbl">1日の目標摂取カロリー (kcal)</label><input type="number" id="gC" required class="inp"></div>
   <div><label class="lbl">1日の目標ウォーキング距離 (km)</label><input type="number" step="0.1" id="gK" required class="inp"></div>
+  <div class="bg-orange-50/60 border border-orange-100 rounded-2xl p-3.5 space-y-3">
+   <p class="text-xs font-bold text-orange-700">食事のカロリー自動計算</p>
+   <div><label class="lbl">「おつまみ」の目安カロリー (kcal)</label><input type="number" id="gSn" min="0" class="inp"></div>
+   <div><label class="lbl">よく食べるもののカロリー(1行に「名前=kcal」)</label><textarea id="gFd" rows="4" class="inp text-xs font-mono" placeholder="ラーメン=550&#10;ハイボール=100"></textarea><p class="text-[11px] text-slate-400 mt-1">ここに登録した名前は、内蔵データより優先されます。</p></div>
+   <div class="pt-3 border-t border-orange-100 space-y-2">
+    <button type="button" id="recalcBtn" class="w-full py-2 text-xs font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-xl">記録済みの食事を再計算する</button>
+    <button type="button" id="recalcUndo" style="display:none" class="w-full py-2 text-xs font-semibold text-orange-700 bg-white border border-orange-200 hover:bg-orange-50 rounded-xl">直前の再計算を元に戻す</button>
+    <p id="recalcMsg" class="text-[11px] text-slate-500 leading-relaxed" role="status"></p>
+   </div>
+  </div>
   <div class="pt-2 flex justify-end space-x-3"><button type="button" class="cancel">キャンセル</button><button type="submit" class="save bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20">保存する</button></div>
  </form></div></div>
 
@@ -182,6 +206,23 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
  <div class="flex justify-between items-center"><button type="button" id="txtOpen" class="text-xs font-medium text-sky-700 hover:underline">テキストで保存・復元</button><button type="button" class="cancel">閉じる</button></div>
 </div></div>
 
+<div id="editModal" class="modal" style="display:none"><div class="box">
+ <div class="flex justify-between items-center"><h3 class="text-lg font-bold">記録の編集 <span id="edDateLabel" class="text-emerald-600"></span></h3><button class="close-modal text-slate-400 hover:text-slate-600 p-1" aria-label="閉じる"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+ <form id="editForm" class="space-y-4">
+  <div class="grid grid-cols-2 gap-4">
+   <div><label class="lbl">体重 (kg)</label><input type="number" step="0.1" id="edW" class="inp"></div>
+   <div><label class="lbl">体脂肪率 (%)</label><input type="number" step="0.1" id="edF" class="inp"></div>
+   <div><label class="lbl">距離 (km)</label><input type="number" step="0.01" id="edK" class="inp"></div>
+   <div><label class="lbl">歩数 (歩)</label><input type="number" id="edS" class="inp"></div>
+  </div>
+  <p class="text-xs text-slate-400">体重や距離を空にして保存すると、その項目の記録が削除されます。</p>
+  <div><p class="lbl">食事</p><div id="edMeals" class="space-y-2"></div></div>
+  <div class="pt-2 flex flex-wrap justify-between items-center gap-3">
+   <button type="button" id="edDel" class="text-xs font-medium text-rose-600 hover:underline text-left">この日の記録をすべて削除</button>
+   <div class="flex space-x-3"><button type="button" class="cancel">キャンセル</button><button type="submit" class="save bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20">保存する</button></div>
+  </div>
+ </form></div></div>
+
 <div id="textModal" class="modal" style="display:none"><div class="box">
  <div class="flex justify-between items-center"><h3 class="text-lg font-bold">テキストで保存・復元</h3><button class="close-modal text-slate-400 hover:text-slate-600 p-1" aria-label="閉じる"><i data-lucide="x" class="w-5 h-5"></i></button></div>
  <p id="txtMsg" class="text-xs text-slate-500 leading-relaxed"></p>
@@ -200,8 +241,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <script>
 (function(){
-var KEY="healthlog_v1",S={weights:[],meals:[],walks:[],goals:{weight:60,calories:2000,walkDistance:5,height:170,age:30,gender:"male"}};
-try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object"){["weights","meals","walks"].forEach(function(k){if(Array.isArray(p[k]))S[k]=p[k];});if(p.goals)Object.assign(S.goals,p.goals);}}}catch(e){}
+var KEY="healthlog_v1",S={weights:[],meals:[],walks:[],scale:{},goals:{snack:500,foods:{},weight:60,calories:2000,walkDistance:5,height:170,age:30,gender:"male"}};
+try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object"){["weights","meals","walks"].forEach(function(k){if(Array.isArray(p[k]))S[k]=p[k];});if(p.goals)Object.assign(S.goals,p.goals);if(p.scale&&typeof p.scale==="object")S.scale=p.scale;}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 var $=function(i){return document.getElementById(i);};
 var z=function(n){return String(n).padStart(2,"0");};
@@ -213,11 +254,13 @@ function estFat(w,h,a,g){h=+h;a=+a;if(!h||!a)return null;var bmi=w/Math.pow(h/10
 function fatOf(w){return w.fat!=null?w.fat:estFat(w.weight,S.goals.height,S.goals.age,S.goals.gender);}
 function normDate(v){if(typeof v==="number"){return fmt(new Date(Math.round((v-25569)*86400000)+new Date().getTimezoneOffset()*60000));}var m=String(v).trim().match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);return m?m[1]+"-"+z(m[2])+"-"+z(m[3]):null;}
 
+var editDate=null,delArm=false,calManual=false,rcArm=false,rcBackup=null,collapsed={};
 var range=30,offset=0,chart=null,CATS=[["朝食","breakfast","sun","amber"],["昼食","lunch","sun-medium","orange"],["夕食","dinner","moon","indigo"],["間食","snack","cookie","pink"]];
 
 function openModal(id,type){
  var d=$("curDate").value;$("wDate").value=d;$("kDate").value=d;$("mDate").value=d;
- if(id==="goalModal"){var g=S.goals;$("gH").value=g.height;$("gA").value=g.age;$("gG").value=g.gender;$("gW").value=g.weight;$("gC").value=g.calories;$("gK").value=g.walkDistance;}
+ if(id==="goalModal"){var g=S.goals;$("gH").value=g.height;$("gA").value=g.age;$("gG").value=g.gender;$("gW").value=g.weight;$("gC").value=g.calories;$("gK").value=g.walkDistance;$("gSn").value=g.snack!=null?g.snack:500;$("gFd").value=Object.keys(g.foods||{}).map(function(k){return k+"="+g.foods[k];}).join("\n");rcArm=false;$("recalcBtn").textContent="記録済みの食事を再計算する";$("recalcMsg").textContent="";$("recalcUndo").style.display=rcBackup?"":"none";}
+ if(id==="mealModal"){$("mHint").textContent="";calManual=false;}
  if(type)$("mType").value=type;
  $(id).style.display="flex";
 }
@@ -252,7 +295,7 @@ function render(){
  $("mealGrid").innerHTML=CATS.map(function(c){
   var ms=tm.filter(function(m){return m.type===c[0];}),cal=ms.reduce(function(s,m){return s+(+m.calories||0);},0);
   var body=ms.length?ms.map(function(m){return '<div class="bg-slate-50 p-2 rounded-xl border border-slate-100 flex justify-between items-center text-xs gap-2"><span class="min-w-0 break-words">'+esc(m.name)+' ('+(+m.calories||0)+' kcal)</span><button data-delm="'+esc(m.id)+'" class="text-slate-300 hover:text-rose-500 shrink-0" aria-label="削除"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>';}).join(""):'<p class="text-xs text-slate-400 italic">記録がありません</p>';
-  return '<div class="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm flex flex-col justify-between"><div><div class="flex items-center justify-between mb-3"><span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-'+c[3]+'-50 text-'+c[3]+'-700 border border-'+c[3]+'-200/50"><i data-lucide="'+c[2]+'" class="w-3.5 h-3.5 mr-1"></i> '+c[0]+'</span><span class="text-xs font-medium text-slate-400">'+cal+' kcal</span></div><div class="space-y-2 min-h-[60px]">'+body+'</div></div><button data-addm="'+c[0]+'" class="mt-4 w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl border border-slate-200 flex items-center justify-center space-x-1"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>追加・編集</span></button></div>';
+  return '<div class="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm flex flex-col justify-between"><div><div class="flex items-center justify-between mb-3"><span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-'+c[3]+'-50 text-'+c[3]+'-700 border border-'+c[3]+'-200/50"><i data-lucide="'+c[2]+'" class="w-3.5 h-3.5 mr-1"></i> '+c[0]+'</span><span class="text-xs font-medium text-slate-400">'+cal+' kcal</span></div><div class="space-y-2 min-h-[60px]">'+body+'</div></div><button data-addm="'+c[0]+'" class="mt-4 w-full py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs font-semibold rounded-xl border border-orange-200 flex items-center justify-center space-x-1"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>追加・編集</span></button></div>';
  }).join("");
 
  // month stats
@@ -260,16 +303,197 @@ function render(){
  $("mTotal").textContent=mt.toFixed(1);$("mAvg").textContent=mw.length?(mt/mw.length).toFixed(1):"0.0";
 
  // table
- var rows=S.weights.slice().reverse().slice(0,10);
- $("tbody").innerHTML=rows.length?rows.map(function(w){
-  var i=S.weights.indexOf(w),sl=S.weights.slice(Math.max(0,i-4),i+1),avg=sl.reduce(function(s,x){return s+x.weight;},0)/sl.length;
-  var wk=S.walks.find(function(x){return x.date===w.date;}),dm=S.meals.filter(function(m){return m.date===w.date;});
-  var cell=function(t){var a=dm.filter(function(m){return t.indexOf(m.type)>=0;});return a.length?esc(a.map(function(m){return m.name;}).join("、"))+'<br><span class="text-slate-400">'+a.reduce(function(s,m){return s+(+m.calories||0);},0)+' kcal</span>':"--";};
-  return '<tr class="hover:bg-slate-50/80 text-xs sm:text-sm"><td class="py-3 px-3 font-semibold text-slate-700">'+esc(w.date)+'</td><td class="py-3 px-3 font-bold text-slate-800">'+w.weight.toFixed(1)+' kg</td><td class="py-3 px-3 font-medium text-emerald-600">'+avg.toFixed(1)+' kg</td><td class="py-3 px-3">'+(w.fat!=null?(+w.fat).toFixed(1)+' %':"--")+'</td><td class="py-3 px-3 font-medium text-sky-600">'+(wk?(+wk.distance).toFixed(1)+' km':"--")+'</td><td class="py-3 px-3">'+cell(["朝食"])+'</td><td class="py-3 px-3">'+cell(["昼食"])+'</td><td class="py-3 px-3">'+cell(["夕食","間食"])+'</td><td class="py-3 px-3 text-right"><button data-delw="'+esc(w.date)+'" class="text-slate-400 hover:text-rose-600 p-1" aria-label="削除"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>';
- }).join(""):'<tr><td colspan="9" class="py-6 px-3 text-center text-xs text-slate-400">記録がありません。「体重を記録」から追加しましょう。</td></tr>';
+ renderTable();
 
  drawChart();
  icons();
+}
+var DB=[];
+`ご飯|ごはん|ライス|白米:235:1
+おにぎり|おむすび:180:1
+食パン|トースト:160:1
+パン:200:1
+菓子パン:350:1
+クロワッサン:230:1
+ラーメン:550:1
+つけ麺:700:1
+うどん:300:1
+そば|蕎麦:300:1
+そうめん|素麺:300:1
+パスタ|スパゲティ|スパゲッティ:550:1
+ナポリタン:650:1
+カルボナーラ:750:1
+焼きそば:550:1
+チャーハン|炒飯:650:1
+カレー:750:1
+牛丼:700:1
+親子丼:700:1
+カツ丼:900:1
+天丼:750:1
+海鮮丼:600:1
+寿司|すし:60:8
+ハンバーガー:500:1
+ピザ:250:2
+サンドイッチ:350:1
+餅|もち:120:1
+シリアル|グラノーラ:200:1
+オートミール:150:1
+カップ麺|カップラーメン:350:1
+弁当:700:1
+唐揚げ|から揚げ|からあげ|唐揚:80:3
+とんかつ|トンカツ|カツ:450:1
+ハンバーグ:400:1
+餃子|ギョーザ|ぎょうざ:50:6
+焼き鳥|焼鳥|やきとり:70:3
+サラダチキン:110:1
+ステーキ:450:1
+焼肉|焼き肉:600:1
+生姜焼き:400:1
+肉じゃが:250:1
+刺身:150:1
+焼き魚|塩鮭|鮭:200:1
+サバ|さば|鯖:250:1
+煮魚:200:1
+天ぷら:350:1
+エビフライ:100:3
+フライ:300:1
+コロッケ:150:1
+オムレツ|卵焼き|だし巻き:200:1
+目玉焼き:100:1
+ゆで卵|卵|たまご|玉子:75:1
+納豆:90:1
+豆腐|冷奴|冷やっこ:80:1
+味噌汁|みそ汁:40:1
+スープ:80:1
+サラダ:80:1
+漬物|お新香|キムチ:20:1
+シチュー:350:1
+グラタン|ドリア:550:1
+オムライス:700:1
+お好み焼き:550:1
+たこ焼き:50:8
+枝豆:130:1
+ナッツ|ピーナッツ|アーモンド:170:1
+ポテトフライ|フライドポテト|ポテト:330:1
+ポテトチップス|ポテチ:330:1
+チーズ:70:1
+さきいか|あたりめ:100:1
+たこわさ:60:1
+軟骨揚げ:200:1
+ソーセージ|ウインナー|ハム:60:2
+ベーコン:40:2
+チキン:200:1
+ビール:140:1
+生ビール:200:1
+発泡酒:150:1
+ハイボール:70:1
+チューハイ|酎ハイ|サワー:150:1
+日本酒|熱燗|冷酒:190:1
+ワイン:90:1
+焼酎:130:1
+ウイスキー:70:1
+カクテル:150:1
+コーヒー:5:1
+カフェラテ|ラテ|カフェオレ:120:1
+紅茶|緑茶|麦茶|ウーロン茶:0:1
+ジュース:90:1
+コーラ|サイダー|ジンジャーエール:160:1
+牛乳|ミルク:130:1
+ヨーグルト:60:1
+プロテイン:120:1
+ケーキ:350:1
+アイスクリーム|アイス:200:1
+チョコレート|チョコ:150:1
+クッキー:50:3
+せんべい|煎餅:40:2
+どら焼き:280:1
+大福:200:1
+プリン:150:1
+ドーナツ:300:1
+バナナ:90:1
+りんご|リンゴ:130:1
+みかん:40:2`.split("\n").forEach(function(l){var p=l.trim().split(":");if(p.length<3)return;p[0].split("|").forEach(function(k){DB.push({k:k,c:+p[1],q:+p[2]||1});});});
+var UNIT="個|杯|本|枚|缶|貫|切れ|皿|人前|パック|玉|膳|つ|瓶|合|人";
+function estimate(raw){
+ var s=String(raw||"").normalize("NFKC").replace(/\s+(?=[\d×x*])/g,"");
+ var segs=s.split(/[、,，・\/／+＋&＆\n]+|\s+/).filter(Boolean);
+ var g=S.goals||{},custom=g.foods||{},sn=g.snack!=null&&!isNaN(+g.snack)?+g.snack:500,parts=[],unknown=[],total=0;
+ var entries=[];
+ Object.keys(custom).forEach(function(k){if(k&&!isNaN(+custom[k]))entries.push({k:k.normalize("NFKC"),c:+custom[k],q:1,u:1});});
+ entries.push({k:"おつまみ",c:sn,q:1,u:1},{k:"つまみ",c:sn,q:1,u:1});
+ entries=entries.concat(DB).sort(function(a,b){return b.k.length-a.k.length||(b.u?1:0)-(a.u?1:0);});
+ var reA=new RegExp("^(\\d+(?:\\.\\d+)?)\\s*(?:"+UNIT+")"),reB=new RegExp("(\\d+(?:\\.\\d+)?)\\s*(?:"+UNIT+")の?$");
+ segs.forEach(function(seg){
+  var km=seg.match(/(\d+(?:\.\d+)?)\s*kcal/i);
+  if(km){var v=Math.round(+km[1]);parts.push({n:seg.replace(km[0],"").trim()||seg,c:v});total+=v;return;}
+  var w=seg,hit=false;
+  entries.forEach(function(e){
+   var idx;
+   while((idx=w.indexOf(e.k))>=0){
+    hit=true;
+    var pre=w.slice(0,idx),rest=w.slice(idx+e.k.length),q=e.q,m,blank=function(n){return new Array(n+1).join("\u0001");};
+    if((m=rest.match(/^[×x*]\s*(\d+(?:\.\d+)?)/))||(m=rest.match(reA))){q=+m[1];rest=blank(m[0].length)+rest.slice(m[0].length);}
+    else if((m=pre.match(reB))){q=+m[1];pre=pre.slice(0,pre.length-m[0].length)+blank(m[0].length);}
+    if(!(q>0&&q<=50))q=e.q;
+    var c=Math.round(e.c*q);parts.push({n:e.k+(q!==1?"×"+q:""),c:c});total+=c;
+    w=pre+blank(e.k.length)+rest;
+   }
+  });
+  if(!hit&&!/^[\d.×x*\s]+(?:個|杯|本|枚|缶|貫|皿|人前)?$/.test(seg))unknown.push(seg);
+ });
+ return {total:total,parts:parts,unknown:unknown};
+}
+function renderTable(){
+ var set={};
+ S.weights.forEach(function(w){set[w.date]=1;});S.walks.forEach(function(w){set[w.date]=1;});S.meals.forEach(function(m){set[m.date]=1;});
+ var dates=Object.keys(set).sort().reverse(),tb=$("tbody");
+ if(!dates.length){tb.innerHTML='<tr><td colspan="10" class="py-6 px-3 text-center text-xs text-slate-400">記録がありません。「体重」ボタンから追加しましょう。</td></tr>';return;}
+ var ms={};dates.forEach(function(d){var m=d.slice(0,7);ms[m]=ms[m]||{days:0,km:0,ws:[],kc:0,md:{}};ms[m].days++;});
+ S.walks.forEach(function(w){var m=w.date.slice(0,7);if(ms[m])ms[m].km+=(+w.distance||0);});
+ S.weights.forEach(function(w){var m=w.date.slice(0,7);if(ms[m])ms[m].ws.push(w.weight);});
+ S.meals.forEach(function(x){var m=x.date.slice(0,7);if(ms[m]){ms[m].kc+=(+x.calories||0);ms[m].md[x.date]=1;}});
+ var cur="",html="";
+ dates.forEach(function(d){
+  var m=d.slice(0,7);
+  if(m!==cur){cur=m;var st=ms[m],aw=st.ws.length?(st.ws.reduce(function(a,b){return a+b;},0)/st.ws.length).toFixed(1)+" kg":"--",open=!collapsed[m];
+   html+='<tr class="bg-emerald-50/70"><td colspan="10" class="p-0"><button type="button" data-mon="'+m+'" class="w-full flex flex-wrap items-center justify-between gap-x-3 px-3 py-2.5 text-left text-xs sm:text-sm font-bold text-emerald-800"><span>'+m.slice(0,4)+'年'+(+m.slice(5))+'月</span><span class="font-medium text-emerald-700">記録 '+st.days+'日 ・ 平均体重 '+aw+' ・ 歩行 '+st.km.toFixed(1)+' km ・ 平均摂取 '+(Object.keys(st.md).length?Math.round(st.kc/Object.keys(st.md).length).toLocaleString()+' kcal/日':'--')+' '+(open?'▲':'▼')+'</span></button></td></tr>';}
+  if(collapsed[m])return;
+  var w=S.weights.find(function(x){return x.date===d;}),wk=S.walks.find(function(x){return x.date===d;}),dm=S.meals.filter(function(x){return x.date===d;});
+  var tot=dm.reduce(function(a,x){return a+(+x.calories||0);},0),goalC=+(S.goals&&S.goals.calories)||0,avg="--";
+  if(w){var i=S.weights.indexOf(w),sl=S.weights.slice(Math.max(0,i-4),i+1);avg=(sl.reduce(function(a,x){return a+x.weight;},0)/sl.length).toFixed(1)+" kg";}
+  var cell=function(t){var a=dm.filter(function(x){return t.indexOf(x.type)>=0;});return a.length?esc(a.map(function(x){return x.name;}).join("、"))+'<br><span class="text-slate-400">'+a.reduce(function(s,x){return s+(+x.calories||0);},0)+' kcal</span>':"--";};
+  html+='<tr class="hover:bg-slate-50/80 text-xs sm:text-sm"><td class="py-3 px-3 font-semibold text-slate-700 whitespace-nowrap">'+esc(d)+'</td><td class="py-3 px-3 font-bold text-slate-800">'+(w?w.weight.toFixed(1)+' kg':'--')+'</td><td class="py-3 px-3 font-medium text-emerald-600">'+avg+'</td><td class="py-3 px-3">'+(w&&w.fat!=null?(+w.fat).toFixed(1)+' %':'--')+'</td><td class="py-3 px-3 font-medium text-sky-600">'+(wk?(+wk.distance).toFixed(1)+' km':'--')+'</td><td class="py-3 px-3">'+cell(["朝食"])+'</td><td class="py-3 px-3">'+cell(["昼食"])+'</td><td class="py-3 px-3">'+cell(["夕食","間食"])+'</td><td class="py-3 px-3 font-bold whitespace-nowrap '+(goalC&&tot>goalC?'text-rose-600':'text-orange-600')+'">'+(dm.length?tot.toLocaleString()+' kcal':'--')+'</td><td class="py-3 px-3 text-right"><button data-edit="'+esc(d)+'" class="text-slate-400 hover:text-emerald-600 p-1" aria-label="'+esc(d)+'の記録を編集"><i data-lucide="pencil" class="w-4 h-4"></i></button></td></tr>';
+ });
+ tb.innerHTML=html;
+}
+function openEdit(d){
+ editDate=d;delArm=false;$("edDel").textContent="この日の記録をすべて削除";
+ var w=S.weights.find(function(x){return x.date===d;}),k=S.walks.find(function(x){return x.date===d;});
+ $("edDateLabel").textContent=d;
+ $("edW").value=w?w.weight:"";$("edF").value=w&&w.fat!=null?w.fat:"";
+ $("edK").value=k?k.distance:"";$("edS").value=k&&k.steps?k.steps:"";
+ var box=$("edMeals");box.innerHTML="";
+ var ms=S.meals.filter(function(m){return m.date===d;});
+ if(!ms.length)box.innerHTML='<p class="text-xs text-slate-400">この日の食事記録はありません(追加は「食事」ボタンから)。</p>';
+ ms.forEach(function(m){
+  var row=document.createElement("div");row.className="grid grid-cols-12 gap-1.5 items-center";row.dataset.id=m.id;
+  row.innerHTML='<select class="inp col-span-3 !px-1.5 !py-1.5 text-xs">'+["朝食","昼食","夕食","間食"].map(function(t){return '<option'+(t===m.type?' selected':'')+'>'+t+'</option>';}).join("")+'</select><input type="text" maxlength="60" class="inp col-span-5 !px-2 !py-1.5 text-xs" value="'+esc(m.name)+'"><input type="number" class="inp col-span-3 !px-2 !py-1.5 text-xs" value="'+(+m.calories||0)+'"><button type="button" class="col-span-1 text-rose-500 text-xs" aria-label="この食事を削除">✕</button>';
+  row.querySelector("button").addEventListener("click",function(){row.dataset.del="1";row.style.display="none";});
+  var ins=row.querySelectorAll("input"),man=false;
+  ins[1].addEventListener("input",function(){man=true;});
+  ins[0].addEventListener("input",function(){if(man)return;var r=estimate(ins[0].value);if(r.total>0)ins[1].value=r.total;});
+  box.appendChild(row);
+ });
+ $("editModal").style.display="flex";
+}
+function syncScale(){
+ var sc=S.scale||{},m={scWmin:"wmin",scWmax:"wmax",scFmin:"fmin",scFmax:"fmax",scKmax:"kmax"};
+ Object.keys(m).forEach(function(id){$(id).value=sc[m[id]]!=null?sc[m[id]]:"";});
+}
+function zoomY(f){
+ var y=chart&&chart.scales&&chart.scales.y;if(!y)return;
+ var c=(y.min+y.max)/2,h=Math.max(0.2,(y.max-y.min)/2*f);
+ S.scale.wmin=+(c-h).toFixed(1);S.scale.wmax=+(c+h).toFixed(1);save();syncScale();drawChart();
 }
 function drawChart(){
  if(chart){
@@ -283,6 +507,10 @@ function drawChart(){
   chart.data.datasets[0].data=ws.map(function(w){return w.weight;});
   chart.data.datasets[1].data=ws.map(function(w){var f=fatOf(w);return f!=null?+f.toFixed(1):null;});
   chart.data.datasets[2].data=dates.map(function(d){var k=S.walks.find(function(x){return x.date===d;});return k?+k.distance:0;});
+  var sc=S.scale||{},o=chart.options.scales,okW=sc.wmin!=null&&sc.wmax!=null&&sc.wmin<sc.wmax,okF=sc.fmin!=null&&sc.fmax!=null&&sc.fmin<sc.fmax;
+  o.y.min=okW?sc.wmin:undefined;o.y.max=okW?sc.wmax:undefined;
+  o.y1.min=okF?sc.fmin:undefined;o.y1.max=okF?sc.fmax:undefined;
+  o.y2.max=sc.kmax>0?sc.kmax:undefined;
   chart.update("none");
  }
 }
@@ -398,7 +626,9 @@ function init(){
  document.querySelectorAll(".close-modal,.cancel").forEach(function(b){b.addEventListener("click",closeAll);});
  document.querySelectorAll(".modal").forEach(function(m){m.addEventListener("click",function(e){if(e.target===m)closeAll();});});
  document.addEventListener("click",function(e){
-  var t=e.target.closest("[data-addm],[data-delm],[data-delw]");if(!t)return;
+  var t=e.target.closest("[data-addm],[data-delm],[data-delw],[data-edit],[data-mon]");if(!t)return;
+  if(t.dataset.edit){openEdit(t.dataset.edit);return;}
+  if(t.dataset.mon){collapsed[t.dataset.mon]=!collapsed[t.dataset.mon];renderTable();icons();return;}
   if(t.dataset.addm)openModal("mealModal",t.dataset.addm);
   else if(t.dataset.delm){S.meals=S.meals.filter(function(m){return m.id!==t.dataset.delm;});save();render();toast("食事記録を削除しました");}
   else if(t.dataset.delw){S.weights=S.weights.filter(function(w){return w.date!==t.dataset.delw;});save();render();toast("体重記録を削除しました");}
@@ -409,10 +639,14 @@ function init(){
  $("walkForm").addEventListener("submit",function(e){e.preventDefault();var d=parseFloat($("kDist").value),s=$("kStep").value,dt=$("kDate").value,i=S.walks.findIndex(function(w){return w.date===dt;});
   var o={date:dt,distance:d,steps:s?parseInt(s,10):Math.round(d*1400)};if(i>=0)S.walks[i]=o;else S.walks.push(o);save();closeAll();e.target.reset();render();toast("ウォーキングを記録しました");});
  $("mealForm").addEventListener("submit",function(e){e.preventDefault();
-  S.meals.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),date:$("mDate").value,type:$("mType").value,name:$("mName").value.trim(),calories:Number($("mCal").value)||0,notes:$("mNotes").value});
-  save();closeAll();e.target.reset();render();toast("食事を記録しました");});
+  var nm=$("mName").value.trim(),typed=Number($("mCal").value)||0,est=estimate(nm),cal=typed||est.total||0,learned=false;
+  if(calManual&&typed>0&&!est.parts.length&&nm.length<=30&&!/[、,，・+＋&＆\/／]/.test(nm)){S.goals.foods=S.goals.foods||{};S.goals.foods[nm]=typed;learned=true;}
+  S.meals.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),date:$("mDate").value,type:$("mType").value,name:nm,calories:cal,notes:$("mNotes").value});
+  save();closeAll();e.target.reset();calManual=false;$("mHint").textContent="";render();toast(learned?"食事を記録し、「"+nm+"」のカロリーを覚えました":"食事を記録しました");});
  $("goalForm").addEventListener("submit",function(e){e.preventDefault();
-  S.goals={weight:parseFloat($("gW").value),calories:parseInt($("gC").value,10),walkDistance:parseFloat($("gK").value),height:parseFloat($("gH").value)||0,age:parseInt($("gA").value,10)||0,gender:$("gG").value};
+  var foods={},sn=parseInt($("gSn").value,10);
+  $("gFd").value.split(/\n/).forEach(function(l){var m=l.normalize("NFKC").match(/^\s*(.+?)\s*[=:]\s*(\d+(?:\.\d+)?)/);if(m)foods[m[1].trim()]=+m[2];});
+  S.goals={weight:parseFloat($("gW").value),calories:parseInt($("gC").value,10),walkDistance:parseFloat($("gK").value),height:parseFloat($("gH").value)||0,age:parseInt($("gA").value,10)||0,gender:$("gG").value,snack:isNaN(sn)?500:sn,foods:foods};
   save();closeAll();render();toast("目標を保存しました");});
  $("confirmClear").addEventListener("click",function(){S.weights=[];S.meals=[];S.walks=[];save();closeAll();render();toast("全データを初期化しました");});
  $("quickSaveBtn").addEventListener("click",exportJson);$("dlJson").addEventListener("click",exportJson);$("dlXlsx").addEventListener("click",exportXlsx);
@@ -435,6 +669,73 @@ function init(){
   if(no!==offset){offset=no;drawChart();}
  });
  ["pointerup","pointercancel","pointerleave"].forEach(function(ev){box.addEventListener(ev,function(){sx=null;});});
+ $("editForm").addEventListener("submit",function(e){
+  e.preventDefault();var d=editDate;if(!d)return;
+  var wv=$("edW").value,fv=$("edF").value,kv=$("edK").value,sv=$("edS").value;
+  S.weights=S.weights.filter(function(x){return x.date!==d;});
+  if(wv!==""&&!isNaN(parseFloat(wv)))S.weights.push({date:d,weight:parseFloat(wv),fat:fv!==""&&!isNaN(parseFloat(fv))?parseFloat(fv):null});
+  S.walks=S.walks.filter(function(x){return x.date!==d;});
+  if(kv!==""&&!isNaN(parseFloat(kv))){var km=parseFloat(kv);S.walks.push({date:d,distance:km,steps:sv!==""?parseInt(sv,10):Math.round(km*1400)});}
+  document.querySelectorAll("#edMeals [data-id]").forEach(function(row){
+   var i=S.meals.findIndex(function(m){return m.id===row.dataset.id;});if(i<0)return;
+   if(row.dataset.del){S.meals.splice(i,1);return;}
+   var c=row.querySelectorAll("select,input");
+   S.meals[i].type=c[0].value;S.meals[i].name=c[1].value.trim()||S.meals[i].name;S.meals[i].calories=Number(c[2].value)||0;
+  });
+  save();closeAll();render();toast("記録を更新しました");
+ });
+ $("edDel").addEventListener("click",function(){
+  if(!editDate)return;
+  if(!delArm){delArm=true;this.textContent="もう一度押すと、この日の記録をすべて削除します";return;}
+  var d=editDate;
+  S.weights=S.weights.filter(function(x){return x.date!==d;});S.walks=S.walks.filter(function(x){return x.date!==d;});S.meals=S.meals.filter(function(x){return x.date!==d;});
+  save();closeAll();render();toast("この日の記録を削除しました");
+ });
+ function parseFoods(t){var f={};String(t).split(/\n/).forEach(function(l){var m=l.normalize("NFKC").match(/^\s*(.+?)\s*[=:]\s*(\d+(?:\.\d+)?)/);if(m)f[m[1].trim()]=+m[2];});return f;}
+ $("recalcBtn").addEventListener("click",function(){
+  var sn=parseInt($("gSn").value,10);if(!isNaN(sn))S.goals.snack=sn;S.goals.foods=parseFoods($("gFd").value);
+  var ch=[],keep=0;
+  S.meals.forEach(function(m){var r=estimate(m.name);if(r.parts.length&&r.total>0){if(Math.round(+m.calories||0)!==r.total)ch.push({m:m,from:+m.calories||0,to:r.total});}else keep++;});
+  var msg=$("recalcMsg");
+  if(!ch.length){msg.textContent="変更が必要な記録はありません(全"+S.meals.length+"件。名前から計算できない"+keep+"件は現在の値のままです)。";rcArm=false;this.textContent="記録済みの食事を再計算する";save();return;}
+  if(!rcArm){
+   rcArm=true;this.textContent="実行する(もう一度押してください)";
+   msg.textContent="全"+S.meals.length+"件のうち"+ch.length+"件が変わります。例: "+ch.slice(0,3).map(function(c){return c.m.name+" "+c.from+"→"+c.to;}).join("、")+"。手入力した値も、名前から計算できるものは上書きされます(計算できない"+keep+"件は変わりません)。";
+   return;
+  }
+  rcBackup=ch.map(function(c){return {id:c.m.id,calories:c.from};});
+  ch.forEach(function(c){c.m.calories=c.to;});
+  save();render();rcArm=false;this.textContent="記録済みの食事を再計算する";
+  $("recalcUndo").style.display="";
+  msg.textContent=ch.length+"件を再計算しました。元に戻す場合は、このページを閉じる前に下のボタンを押してください。";
+  toast(ch.length+"件の食事を再計算しました");
+ });
+ $("recalcUndo").addEventListener("click",function(){
+  if(!rcBackup)return;
+  rcBackup.forEach(function(b){var m=S.meals.find(function(x){return x.id===b.id;});if(m)m.calories=b.calories;});
+  rcBackup=null;save();render();this.style.display="none";$("recalcMsg").textContent="再計算前の値に戻しました。";toast("元に戻しました");
+ });
+ var nameT=null;
+ function showEst(fill){
+  var r=estimate($("mName").value),h=$("mHint");
+  if(!r.parts.length&&!r.unknown.length){h.textContent="";return;}
+  var t=r.parts.map(function(p){return p.n+" "+p.c;}).join(" + ");
+  if(r.parts.length)t+=" = "+r.total+" kcal(目安)";
+  if(r.unknown.length)t+=(t?" / ":"")+"不明: "+r.unknown.join("、")+"(含まれていません)";
+  h.textContent=t;
+  if(fill&&r.total>0)$("mCal").value=r.total;
+ }
+ $("mName").addEventListener("input",function(){clearTimeout(nameT);nameT=setTimeout(function(){showEst(!calManual);},250);});
+ $("mCal").addEventListener("input",function(){calManual=$("mCal").value!=="";});
+ $("mAuto").addEventListener("click",function(){calManual=false;showEst(true);});
+ var sm={scWmin:"wmin",scWmax:"wmax",scFmin:"fmin",scFmax:"fmax",scKmax:"kmax"};
+ Object.keys(sm).forEach(function(id){$(id).addEventListener("change",function(){
+  var v=parseFloat(this.value);S.scale[sm[id]]=isNaN(v)?null:v;save();drawChart();
+ });});
+ $("scIn").addEventListener("click",function(){zoomY(0.7);});
+ $("scOut").addEventListener("click",function(){zoomY(1.4);});
+ $("scReset").addEventListener("click",function(){S.scale={};save();syncScale();drawChart();});
+ syncScale();
  initChart();render();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
